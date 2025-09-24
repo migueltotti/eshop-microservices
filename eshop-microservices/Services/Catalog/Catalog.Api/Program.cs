@@ -1,12 +1,12 @@
-using Catalog.Api.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var currentAssembly = typeof(Program).Assembly;
+
 builder.Services
-    .AddMediator()
-    .AddCarter();
+    .AddMediator(currentAssembly)
+    .AddCarterWithAssembly(currentAssembly);
 
 var app = builder.Build();
 
