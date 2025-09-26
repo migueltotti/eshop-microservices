@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
+
 namespace Catalog.Api.Products.CreateProduct;
 
 public record CreateProductRequest(

@@ -1,6 +1,3 @@
-using Catalog.Api.Models;
-using LiteBus.Commands.Abstractions;
-
 namespace Catalog.Api.Products.CreateProduct;
 
 public record CreateProductCommand(
@@ -13,7 +10,7 @@ public record CreateProductCommand(
 
 public record CreateProductResult(Guid Id);
 
-internal class CreateProductCommandHandler 
+internal class CreateProductCommandHandler(IDocumentSession session)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> HandleAsync(CreateProductCommand message, CancellationToken cancellationToken = default)
@@ -28,7 +25,8 @@ internal class CreateProductCommandHandler
             Price = message.Price
         };
         
-        // TODO: save to database
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
         
         return new CreateProductResult(product.Id);
     }

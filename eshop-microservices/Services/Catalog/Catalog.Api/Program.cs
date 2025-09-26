@@ -6,7 +6,8 @@ var currentAssembly = typeof(Program).Assembly;
 
 builder.Services
     .AddMediator(currentAssembly)
-    .AddCarterWithAssembly(currentAssembly);
+    .AddCarterWithAssembly(currentAssembly)
+    .AddMartenORM(builder.Configuration);
 
 var app = builder.Build();
 

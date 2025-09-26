@@ -11,6 +11,7 @@
         <PackageReference Include="LiteBus" Version="3.1.0" />
         <PackageReference Include="LiteBus.Commands.Extensions.MicrosoftDependencyInjection" Version="3.1.0" />
         <PackageReference Include="LiteBus.Queries.Extensions.MicrosoftDependencyInjection" Version="3.1.0" />
+        <PackageReference Include="Marten" Version="8.11.0" />
         <PackageReference Include="Mapster" Version="7.4.0" />
     </ItemGroup>
 
