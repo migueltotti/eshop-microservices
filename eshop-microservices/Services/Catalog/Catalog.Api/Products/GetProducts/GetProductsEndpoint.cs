@@ -2,15 +2,16 @@ using LiteBus.Queries.Abstractions;
 
 namespace Catalog.Api.Products.GetProducts;
 
+public record GetAllProductsRequest(int? PageNumber = 1, int? PageSize = 10);
 public record GetAllProductsResponse(IEnumerable<Product> Products);
 
 public class GetProductsEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/products", async (IQueryMediator mediator) =>
-            {
-                var query = new GetProductsQuery();
+        app.MapGet("/products", async ([AsParameters] GetAllProductsRequest request, IQueryMediator mediator) =>
+        {
+            var query = request.Adapt<GetProductsQuery>();
 
             var result = await mediator.QueryAsync(query);
 
