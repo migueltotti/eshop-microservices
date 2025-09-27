@@ -1,7 +1,9 @@
 using JasperFx;
 using Marten;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace BuildingBlocks.Extensions;
 
@@ -11,7 +13,7 @@ public static class MartenExtension
     {
         var connectionString = configuration.GetConnectionString("Postgres")
             ?? throw new NullReferenceException("Postgres connection string is null");
-        
+
         services.AddMarten(opts =>
         {
             opts.Connection(connectionString);

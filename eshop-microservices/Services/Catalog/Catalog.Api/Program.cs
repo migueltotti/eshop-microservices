@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Catalog.Api;
+using Catalog.Api.Infrastructure;
 using LiteBus.Commands.Extensions.MicrosoftDependencyInjection;
 using LiteBus.Messaging.Extensions.MicrosoftDependencyInjection;
 
@@ -14,6 +15,9 @@ builder.Services
     .AddCarterWithAssembly(currentAssembly)
     .AddMartenORM(builder.Configuration)
     .AddValidatorsFromAssembly(currentAssembly);
+
+if (builder.Environment.IsDevelopment())
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
