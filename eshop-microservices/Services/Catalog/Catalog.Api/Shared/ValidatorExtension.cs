@@ -11,6 +11,6 @@ public static class ValidatorExtension
         var result = await validator.ValidateAsync(request, cancellationToken);
         
         if(!result.IsValid)
-            throw new ValidationException(result.Errors.Select(x => x.ErrorMessage).FirstOrDefault());
+            throw new ValidationException(result.Errors);
     }
 }

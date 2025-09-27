@@ -1,6 +1,3 @@
-using Catalog.Api.Products.CreateProduct;
-using FluentValidation;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,11 +10,13 @@ builder.Services
     .AddMartenORM(builder.Configuration)
     .AddValidatorsFromAssembly(currentAssembly);
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapCarter();
 
-app.UseCustomExceptionHandler<Program>();
+app.UseExceptionHandler(option => { });
 
 app.Run();

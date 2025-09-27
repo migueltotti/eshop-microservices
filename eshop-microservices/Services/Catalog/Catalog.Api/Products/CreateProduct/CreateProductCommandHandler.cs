@@ -19,7 +19,9 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-                .WithMessage("Name is required");
+                .WithMessage("Name is required")
+            .Length(2, 150)
+                .WithMessage("Name must be between 2 and 150 characters");
         RuleFor(x => x.Categories)
             .NotEmpty()
                 .WithMessage("Category is required");

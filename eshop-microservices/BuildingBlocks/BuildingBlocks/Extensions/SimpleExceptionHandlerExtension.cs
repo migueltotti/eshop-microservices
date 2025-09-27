@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildingBlocks.Extensions;
 
-public static class CustomExceptionHandler
+public static class SimpleExceptionHandlerExtension
 {
-    public static WebApplication UseCustomExceptionHandler<TReference>(this WebApplication app)
+    public static WebApplication UseSimpleExceptionHandler<TReference>(this WebApplication app)
     {
         app.UseExceptionHandler(exceptionHandlerApp =>
         {
