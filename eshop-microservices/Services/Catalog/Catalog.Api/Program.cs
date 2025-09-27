@@ -1,3 +1,8 @@
+using System.Collections.Immutable;
+using Catalog.Api;
+using LiteBus.Commands.Extensions.MicrosoftDependencyInjection;
+using LiteBus.Messaging.Extensions.MicrosoftDependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
