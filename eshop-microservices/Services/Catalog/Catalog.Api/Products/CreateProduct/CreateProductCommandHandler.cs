@@ -1,3 +1,4 @@
+using Catalog.Api.Shared;
 using FluentValidation;
 
 namespace Catalog.Api.Products.CreateProduct;
@@ -38,10 +39,7 @@ internal class CreateProductCommandHandler(IDocumentSession session, IValidator<
     {
         logger.LogInformation("CreateProductCommandHandler.HandleAsync called with {@Command}", command);
         
-        var result = await validator.ValidateAsync(command, cancellationToken);
-
-        if (!result.IsValid)
-            throw new ValidationException(result.Errors.Select(x => x.ErrorMessage).FirstOrDefault());
+        await validator.ValidateAndThrowExceptionIfNotValidAsync(command, cancellationToken);
         
         var product = new Product()
         {

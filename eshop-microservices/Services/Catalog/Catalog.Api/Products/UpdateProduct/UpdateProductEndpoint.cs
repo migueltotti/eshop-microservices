@@ -1,6 +1,12 @@
 namespace Catalog.Api.Products.UpdateProduct;
 
-public sealed record UpdateProductRequest(Product Product);
+public sealed record UpdateProductRequest(
+    Guid Id,
+    string Name,
+    List<string> Categories,
+    string Description,
+    string ImageFile,
+    decimal Price);
 
 public sealed record UpdateProductResponse(Product Product);
 

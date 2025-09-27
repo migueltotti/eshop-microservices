@@ -1,5 +1,4 @@
-using Catalog.Api.Exceptions;
-using JasperFx.Core;
+using Catalog.Api.Shared;
 
 namespace Catalog.Api.Products.UpdateProduct;
 
@@ -13,12 +12,32 @@ public sealed record UpdateProductCommand(
 
 public sealed record UpdateProductResult(Product Product);
 
-internal class UpdateProductCommandHandle(IDocumentSession session, ILogger<UpdateProductCommandHandle> logger)
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(p => p.Name)
+            .NotEmpty()
+                .WithMessage("Name is required")
+            .Length(2, 150)
+                .WithMessage("Name must be between 2 and 150 characters");
+        RuleFor(p => p.Price)
+            .GreaterThan(0)
+                .WithMessage("Price must be greater than 0");
+    }
+}
+
+internal class UpdateProductCommandHandle(
+    IDocumentSession session, 
+    ILogger<UpdateProductCommandHandle> logger,
+    IValidator<UpdateProductCommand> validator)
     : ICommandHandler<UpdateProductCommand, UpdateProductResult> 
 {
     public async Task<UpdateProductResult> HandleAsync(UpdateProductCommand command, CancellationToken cancellationToken = default)
     {
         logger.LogInformation("UpdateProductCommandHandle.HandleAsync called with {@Command}", command);
+        
+        await validator.ValidateAndThrowExceptionIfNotValidAsync(command, cancellationToken);
         
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
@@ -26,7 +45,7 @@ internal class UpdateProductCommandHandle(IDocumentSession session, ILogger<Upda
         {
             logger.LogInformation("UpdateProductCommandHandle.HandleAsync threw and error, {Error}",
                 new { Error = "Product not found" });
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(command.Id);
         }
 
         product.Name = command.Name;
