@@ -5,7 +5,7 @@ namespace Catalog.Api.Products.UpdateProduct;
 public sealed record UpdateProductCommand(
     Guid Id,
     string Name,
-    List<string> Categories,
+    List<string> Category,
     string Description,
     string ImageFile,
     decimal Price) : ICommand<UpdateProductResult>;
@@ -50,7 +50,7 @@ internal class UpdateProductCommandHandle(
 
         product.Name = command.Name;
         product.Description = command.Description;
-        product.Category = command.Categories;
+        product.Category = command.Category;
         product.ImageFile = command.ImageFile;
         product.Price = command.Price;
         

@@ -3,7 +3,7 @@ namespace Catalog.Api.Products.UpdateProduct;
 public sealed record UpdateProductRequest(
     Guid Id,
     string Name,
-    List<string> Categories,
+    List<string> Category,
     string Description,
     string ImageFile,
     decimal Price);
