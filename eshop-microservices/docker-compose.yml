@@ -33,6 +33,12 @@ services:
     volumes:
       - postgres_catalog:/var/lib/postgresql/data/
 
+  basket.api:
+    image: basket.api
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.Api/Dockerfile
+
+
 volumes:
   postgres_catalog:
-
