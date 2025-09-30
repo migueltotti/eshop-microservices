@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices.JavaScript;
-using FluentValidation.Results;
+using FluentValidation;
 
-namespace Catalog.Api.Shared;
+namespace BuildingBlocks.Validation;
 
 public static class ValidatorExtension
 {

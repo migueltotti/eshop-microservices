@@ -1,5 +1,3 @@
-using Catalog.Api.Shared;
-
 namespace Catalog.Api.Products.UpdateProduct;
 
 public sealed record UpdateProductCommand(

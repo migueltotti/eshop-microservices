@@ -1,6 +1,3 @@
-using Catalog.Api.Exceptions;
-using Catalog.Api.Shared;
-
 namespace Catalog.Api.Products.DeleteProduct;
 
 public sealed record DeleteProductCommand(Guid Id) : ICommand<DeleteProductResult>;

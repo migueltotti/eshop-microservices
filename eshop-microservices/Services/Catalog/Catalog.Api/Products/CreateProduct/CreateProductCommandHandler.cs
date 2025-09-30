@@ -1,6 +1,3 @@
-using Catalog.Api.Shared;
-using FluentValidation;
-
 namespace Catalog.Api.Products.CreateProduct;
 
 public record CreateProductCommand(
