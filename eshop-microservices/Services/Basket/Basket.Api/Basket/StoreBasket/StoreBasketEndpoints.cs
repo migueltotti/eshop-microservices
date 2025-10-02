@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Basket.Api.Basket.StoreBasket;
 
 public record StoreBasketRequest(ShoppingCart Cart);
-public record StoreBasketResponse(bool IsSuccess);
+public record StoreBasketResponse(string UserName);
 
 public class StoreBasketEndpoints : ICarterModule
 {
@@ -15,7 +15,12 @@ public class StoreBasketEndpoints : ICarterModule
 
             var response = result.Adapt<StoreBasketResponse>();
 
-            return Results.Ok(response);
-        });
+            return Results.Created($"/basket/{response.UserName}", response);
+        })
+        .WithName("StoreBasket")
+        .Produces<StoreBasketResponse>(StatusCodes.Status201Created)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Store Basket")
+        .WithDescription("Create or update basket");
     }
 }
