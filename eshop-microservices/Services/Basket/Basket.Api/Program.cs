@@ -1,5 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
-using BuildingBlocks.Extensions;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

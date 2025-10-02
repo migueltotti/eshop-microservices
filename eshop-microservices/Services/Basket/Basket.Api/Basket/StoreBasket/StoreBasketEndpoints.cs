@@ -9,9 +9,9 @@ public class StoreBasketEndpoints : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/basket", async ([FromBody] ShoppingCart cart, ICommandMediator commandMediator) =>
+        app.MapPost("/basket", async ([FromBody] StoreBasketRequest request, ICommandMediator commandMediator) =>
         {
-            var result = await commandMediator.SendAsync(new StoreBasketCommand(cart));
+            var result = await commandMediator.SendAsync(request.Adapt<StoreBasketCommand>());
 
             var response = result.Adapt<StoreBasketResponse>();
 
