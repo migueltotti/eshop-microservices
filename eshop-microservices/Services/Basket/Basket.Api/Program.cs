@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
+using Marten;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,13 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 
 var currentAssembly = typeof(Program).Assembly;
+var connectionString = builder.Configuration.GetConnectionString("Postgres")
+                       ?? throw new NullReferenceException("Postgres connection string is null");
+
 
 builder.Services
     .AddMediator(currentAssembly)
     .AddCarterWithAssembly(currentAssembly)
-    .AddMartenORM(builder.Configuration)
     .AddValidatorsFromAssembly(currentAssembly)
-    .AddExceptionHandler<CustomExceptionHandler>();
+    .AddExceptionHandler<CustomExceptionHandler>()
+    .AddMarten(opts =>
+    {
+        opts.Connection(connectionString);
+        opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+    }).UseLightweightSessions();
 
 var app = builder.Build();
 
