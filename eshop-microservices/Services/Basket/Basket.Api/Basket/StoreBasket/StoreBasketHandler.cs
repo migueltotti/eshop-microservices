@@ -16,7 +16,9 @@ public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
     }
 }
 
-public class StoreBasketCommandHandler(IValidator<StoreBasketCommand> validator) 
+public class StoreBasketCommandHandler(
+    IBasketRepository repository,
+    IValidator<StoreBasketCommand> validator) 
     : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 {
     public async Task<StoreBasketResult> HandleAsync(StoreBasketCommand command, CancellationToken cancellationToken = new CancellationToken())
@@ -27,7 +29,9 @@ public class StoreBasketCommandHandler(IValidator<StoreBasketCommand> validator)
         // TODO: update cache 
 
         var cart = command.Cart;
+
+        await repository.StoreBasketAsync(cart, cancellationToken);
         
-        return new StoreBasketResult("MockBasketUserName");
+        return new StoreBasketResult(command.Cart.UserName);
     }
 }

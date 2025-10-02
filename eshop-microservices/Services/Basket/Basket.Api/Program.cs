@@ -1,7 +1,3 @@
-using BuildingBlocks.Exceptions.Handler;
-using Marten;
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
@@ -9,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 var currentAssembly = typeof(Program).Assembly;
 var connectionString = builder.Configuration.GetConnectionString("Postgres")
                        ?? throw new NullReferenceException("Postgres connection string is null");
-
 
 builder.Services
     .AddMediator(currentAssembly)
@@ -21,6 +16,9 @@ builder.Services
         opts.Connection(connectionString);
         opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
     }).UseLightweightSessions();
+
+builder.Services
+    .AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 
