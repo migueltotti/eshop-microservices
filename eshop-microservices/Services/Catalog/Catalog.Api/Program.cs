@@ -21,7 +21,7 @@ builder.Services
     .AddValidatorsFromAssembly(currentAssembly)
     .AddExceptionHandler<CustomExceptionHandler>()
     .AddHealthChecks()
-        .AddNpgSql(connectionString);;
+        .AddNpgSql(connectionString);
 
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();
