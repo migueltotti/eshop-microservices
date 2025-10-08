@@ -1,6 +1,41 @@
 # This is a generated file. Not intended for manual editing.
 version: "3.4"
 services:
+  basket.api:
+    build:
+      context: "C:\\Users\\migue\\OneDrive\\Documentos\\eshop-microservices\\eshop-microservices"
+      dockerfile: "Services/Basket/Basket.Api/Dockerfile"
+      target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
+    command: []
+    entrypoint:
+    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57100"
+    - "--backend-port=57300"
+    - "--timeout=60"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
+      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
+    image: "basketapi:dev"
+    ports:
+    - "127.0.0.1:57011:57100"
+    - "127.0.0.1:57211:57300"
+    volumes:
+    - "C:\\Users\\migue\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\migue\\OneDrive\\Documentos\\eshop-microservices\\eshop-microservices\\\
+      Services\\Basket\\Basket.Api:/app:rw"
+    - "C:\\Users\\migue\\OneDrive\\Documentos\\eshop-microservices\\eshop-microservices:/src:rw"
+    - "C:\\Users\\migue\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.3\\\
+      Linux64:/opt/rider-debugger"
+    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.3\\bin:/etc/opt/rider-debugger/backend-log.xml"
+    - "C:\\Users\\migue\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2025_10_08_08_59_11:/var/opt/rider-debugger:rw"
+    working_dir: "/app"
   catalog.api:
     build:
       context: "C:\\Users\\migue\\OneDrive\\Documentos\\eshop-microservices\\eshop-microservices"
@@ -23,8 +58,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "catalogapi:dev"
     ports:
-    - "127.0.0.1:57000:57100"
-    - "127.0.0.1:57200:57300"
+    - "127.0.0.1:57012:57100"
+    - "127.0.0.1:57212:57300"
     volumes:
     - "C:\\Users\\migue\\.nuget\\packages:/home/app/.nuget/packages"
     - "C:\\Users\\migue\\OneDrive\\Documentos\\eshop-microservices\\eshop-microservices\\\
@@ -34,5 +69,5 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.3\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\migue\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2025_10_08_07_41_00:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2025_10_08_08_59_11:/var/opt/rider-debugger:rw"
     working_dir: "/app"
