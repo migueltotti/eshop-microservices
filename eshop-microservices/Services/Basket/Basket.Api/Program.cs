@@ -1,3 +1,5 @@
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
@@ -18,7 +20,13 @@ builder.Services
     }).UseLightweightSessions();
 
 builder.Services
-    .AddScoped<IBasketRepository, BasketRepository>();
+    .AddScoped<IBasketRepository, BasketRepository>()
+        .Decorate<IBasketRepository, CachedBasketRepository>()
+    .AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = builder.Configuration.GetConnectionString("Redis")
+                                ?? throw new NullReferenceException("Redis connection string is null");
+    });
 
 var app = builder.Build();
 
